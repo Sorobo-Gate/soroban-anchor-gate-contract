@@ -1,10 +1,25 @@
+# Drips Wave Contribution Guide
 
-Drips Wave Contribution Guide
-SorobanAnchor Gate maintains development tasks under the Drips Wave program.
+SorobanAnchor Gate participates in the **Drips Wave** program to reward open-source contributions.
 
-IssueWeighting
-wave:trivial (100 pts): Documentation fixes, unit tests, refactors.
+---
 
-wave:medium (150  pts): SDK helpers, validation hooks, frontend forms.
+## Working on Issues
 
-wave:high (200 pts): Anchor protocol integrations, dispute logic, contract modules.
+All approved tasks are tracked in our repository issue boards:
+- [Contracts Repository Issues](https://github.com/Sorobo-Gate/soroban-anchor-gate-contract/issues)
+- [Application Repository Issues](https://github.com/Sorobo-Gate/soroban-anchor-gate-app/issues)
+
+Issues are weighted according to the Drips Wave point system:
+- `wave:trivial` (100 Points) — Documentation fixes, test additions, minor refactoring.
+- `wave:medium` (150 Points) — Client SDK methods, UI form validations, error handler expansions.
+- `wave:high` (200 Points) — New contract modules, SEP protocol integrations, multi-sig dispute resolution.
+
+---
+
+## Quality & Pull Request Checklist
+
+Before submitting a pull request, ensure your branch passes all checks:
+- **Contracts:** Must pass `cargo fmt --check`, `cargo clippy --all-targets -- -D warnings`, and `cargo test` with zero warnings.
+- **Relay Daemon:** Must pass `go vet ./...` and `go test ./...`.
+- **Frontend:** Must pass `npm run build` and `npm run lint`.
