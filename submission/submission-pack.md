@@ -14,7 +14,7 @@ SorobanAnchor Gate provides decentralized, non-custodial milestone escrow smart 
 - **`soroban-anchor-gate-contract` (This Repository):**
   - Contains the authoritative Soroban WebAssembly smart contract (`EscrowGate`).
   - Manages token custody, deterministic milestone lifecycles (`Funded -> Disbursed | Refunded`), protocol fee splitting, and timelocked refund enforcement.
-  - Implements 20 comprehensive unit and lifecycle tests with 100% pass rate.
+  - Implements 21 comprehensive unit and lifecycle tests with 100% pass rate.
   - Compiles to `wasm32v1-none` using `stellar contract build`.
 
 - **`soroban-anchor-gate-app` (Companion Repository):**
