@@ -35,6 +35,10 @@ Ensure the following tools are installed before developing:
    git checkout -b feat/your-feature-name
    ```
 2. Pull requests must target `develop`, never `main`.
+3. Branch protection is strictly enforced on `develop`:
+   - All changes must arrive via pull request with at least 1 approving review.
+   - The required status check `Rust & Soroban Checks` must pass.
+   - Force pushes and branch deletions are disabled.
 
 ---
 
@@ -46,13 +50,16 @@ Every pull request must pass all local checks before submission:
 # 1. Code formatting check
 cargo fmt --check
 
-# 2. Compiler linting with warnings denied
+# 2. Typecheck with compiler
+cargo check
+
+# 3. Compiler linting with warnings denied
 cargo clippy --all-targets -- -D warnings
 
-# 3. Unit and integration tests (20 test cases)
+# 4. Unit and integration tests (21 test cases)
 cargo test
 
-# 4. Canonical Stellar WASM contract compilation
+# 5. Canonical Stellar WASM contract compilation
 stellar contract build
 ```
 
