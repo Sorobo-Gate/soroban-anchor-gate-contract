@@ -69,11 +69,12 @@ pub enum DataKey {
 | `AlreadyInitialized` | `2` | Invoking `init` when `DataKey::Admin` already exists in instance storage. | Active MVP enforcement. |
 | `Unauthorized` | `3` | Calling `release_to_anchor` when caller is neither the recorded `payer` nor the contract `admin`. | Active MVP enforcement. |
 | `EscrowNotFound` | `4` | Referencing an `escrow_id` that does not exist in persistent storage. | Active MVP enforcement. |
-| `InvalidStatus` | `5` | Attempting to release or refund an escrow not in `Funded` status (prevents double release / double refund), or integer arithmetic failure. | Active MVP enforcement. |
+| `InvalidStatus` | `5` | Attempting to release or refund an escrow not in `Funded` status (prevents double release / double refund). | Active MVP enforcement. |
 | `UnlockTimeNotReached` | `6` | Attempting `refund` when current ledger timestamp is strictly less than `record.unlock_timestamp`. | Active MVP enforcement. |
 | `UnlockTimePassed` | `7` | Reserved error code: Defined in enum for future dispute mediation workflows (Issue #2). Currently unraised in MVP flow because payer and admin retain release authorization even after timelock. | Reserved for future backlog (Issue #2). |
 | `ZeroAmount` | `8` | Attempting `create_escrow` with `amount <= 0`. | Active MVP enforcement. |
 | `InvalidBps` | `9` | Attempting `init` with `fee_bps > 1000` (exceeding the 10.00% protocol fee ceiling). | Active MVP enforcement. |
+| `ArithmeticOverflow` | `10` | Checked arithmetic failure during counter increment, timelock addition, fee calculation, or payout subtraction. | Active MVP enforcement. |
 
 ---
 

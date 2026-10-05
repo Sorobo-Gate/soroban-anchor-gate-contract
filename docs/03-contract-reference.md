@@ -55,7 +55,7 @@ pub fn create_escrow(
 
 - **Authorization:** Requires `payer.require_auth()`.
 - **Emits:** Event topic `(symbol_short!("created"), escrow_id)` with payload `(payer, amount, profile_hash)`.
-- **Errors:** `ZeroAmount`, `NotInitialized`, `InvalidStatus`.
+- **Errors:** `ZeroAmount`, `NotInitialized`, `ArithmeticOverflow`.
 
 ---
 
@@ -73,7 +73,7 @@ pub fn release_to_anchor(
 
 - **Authorization:** Requires `caller.require_auth()`. `caller` must be either payer or admin.
 - **Emits:** Event topic `(Symbol::new(&env, "disbursed"), escrow_id)` with payload `(profile_hash, payout_amount)`.
-- **Errors:** `EscrowNotFound`, `Unauthorized`, `InvalidStatus`.
+- **Errors:** `EscrowNotFound`, `Unauthorized`, `InvalidStatus`, `ArithmeticOverflow`.
 
 ---
 
