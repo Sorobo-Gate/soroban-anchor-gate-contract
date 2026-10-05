@@ -13,7 +13,7 @@ This document maps all protocol features, architectural assertions, and external
 | **Escrow Creation & Token Inflow** | Live Testnet Transaction | [`evidence/testnet-2026-10-05.md`](testnet-2026-10-05.md) (Tx `a2de3a38...`) | 2026-10-05 | `VERIFIED` |
 | **Anchor Disbursement & Fee Split** | Live Testnet Transaction | [`evidence/testnet-2026-10-05.md`](testnet-2026-10-05.md) (Tx `28a4bb40...`) | 2026-10-05 | `VERIFIED` |
 | **Timelock Expiry & Refund** | Live Testnet Transaction | [`evidence/testnet-2026-10-05.md`](testnet-2026-10-05.md) (Tx `c59866c8...`) | 2026-10-05 | `VERIFIED` |
-| **Comprehensive Test Matrix (20 tests)** | Automated Cargo Suite | `src/test.rs` (100% pass rate) | 2026-10-05 | `TESTED LOCALLY` |
+| **Comprehensive Test Matrix (21 tests)** | Automated Cargo Suite | `src/test.rs` (100% pass rate) | 2026-10-05 | `TESTED LOCALLY` |
 | **WASM Optimization & Target Build** | Stellar CLI 28.1.0 Build | `target/wasm32v1-none/release/*.wasm` (7,476 B) | 2026-10-05 | `VERIFIED` |
 | **Strict Compiler & Linter Cleanliness** | Clippy & Rustfmt Checks | `cargo fmt --check`, `cargo clippy --all-targets -- -D warnings` | 2026-10-05 | `VERIFIED` |
 | **Event Symbol Parity with Relay (`disbursed`)** | Source & Cross-Repo Audit | [`docs/app-parity.md`](../docs/app-parity.md), `subscriber.go` | 2026-10-05 | `VERIFIED` |
