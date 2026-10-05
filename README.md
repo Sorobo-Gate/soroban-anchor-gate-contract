@@ -15,7 +15,7 @@ This repository contains the authoritative smart contract. To maintain clear arc
   - Timelocked refund enforcement based on ledger timestamp.
   - Automatic TTL management for instance and persistent storage.
   - Standardized event emissions (`created`, `disbursed`, `refunded`).
-  - Complete 20-test automated Cargo verification suite.
+  - Complete 21-test automated Cargo verification suite.
 
 - **IMPLEMENTED IN RELATED REPOSITORY (`Sorobo-Gate/soroban-anchor-gate-app`):**
   - Web UI for milestone creation and Freighter wallet signing (`apps/web`).
@@ -105,10 +105,13 @@ Built artifact is generated at:
 # Check formatting
 cargo fmt --check
 
+# Run compiler typecheck
+cargo check
+
 # Run linter
 cargo clippy --all-targets -- -D warnings
 
-# Execute test suite (20 unit and lifecycle tests)
+# Execute test suite (21 unit and lifecycle tests)
 cargo test
 ```
 
