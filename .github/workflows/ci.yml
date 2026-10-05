@@ -2,9 +2,9 @@ name: Contracts CI
 
 on:
   push:
-    branches: [main]
+    branches: [develop, main]
   pull_request:
-    branches: [main]
+    branches: [develop, main]
 
 jobs:
   test:
@@ -13,20 +13,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Rust
+      - name: Install Rust Toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: wasm32-unknown-unknown
+          targets: wasm32v1-none
           components: clippy, rustfmt
 
-      - name: Check Formatting
+      - name: Install Stellar CLI
+        run: |
+          curl -sSL https://github.com/stellar/stellar-cli/releases/download/v28.1.0/stellar-cli-28.1.0-x86_64-unknown-linux-gnu.tar.gz | sudo tar -xz -C /usr/local/bin
+          stellar --version
+
+      - name: Check Code Formatting
         run: cargo fmt --check
 
       - name: Run Clippy Linter
         run: cargo clippy --all-targets -- -D warnings
 
-      - name: Run Unit & Integration Tests
+      - name: Run Unit & Lifecycle Tests
         run: cargo test
 
-      - name: Build WASM Target
-        run: cargo build --target wasm32-unknown-unknown --release
+      - name: Build Contract WASM
+        run: stellar contract build
