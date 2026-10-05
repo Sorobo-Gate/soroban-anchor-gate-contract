@@ -8,13 +8,13 @@ mod test;
 
 use crate::errors::EscrowError;
 use crate::types::{DataKey, EscrowRecord, EscrowStatus};
-use soroban_sdk::{
-    contract, contractimpl, symbol_short, token, Address, BytesN, Env, Symbol,
-};
+use soroban_sdk::{contract, contractimpl, symbol_short, token, Address, BytesN, Env, Symbol};
 
 const BPS_DIVISOR: i128 = 10_000;
 const PERSISTENT_EXTEND_TTL_THRESHOLD: u32 = 100_000;
 const PERSISTENT_EXTEND_TTL_AMOUNT: u32 = 200_000;
+const INSTANCE_EXTEND_TTL_THRESHOLD: u32 = 100_000;
+const INSTANCE_EXTEND_TTL_AMOUNT: u32 = 200_000;
 
 #[contract]
 pub struct EscrowGate;
@@ -40,6 +40,9 @@ impl EscrowGate {
         env.storage().instance().set(&DataKey::Treasury, &treasury);
         env.storage().instance().set(&DataKey::FeeBps, &fee_bps);
         env.storage().instance().set(&DataKey::EscrowCounter, &0u64);
+        env.storage()
+            .instance()
+            .extend_ttl(INSTANCE_EXTEND_TTL_THRESHOLD, INSTANCE_EXTEND_TTL_AMOUNT);
 
         Ok(())
     }
@@ -65,13 +68,15 @@ impl EscrowGate {
             .get(&DataKey::EscrowCounter)
             .ok_or(EscrowError::NotInitialized)?;
 
-        counter += 1;
+        counter = counter.checked_add(1).ok_or(EscrowError::InvalidStatus)?;
 
         let token_client = token::Client::new(&env, &token);
         token_client.transfer(&payer, &env.current_contract_address(), &amount);
 
         let current_time = env.ledger().timestamp();
-        let unlock_timestamp = current_time + lock_duration;
+        let unlock_timestamp = current_time
+            .checked_add(lock_duration)
+            .ok_or(EscrowError::InvalidStatus)?;
 
         let record = EscrowRecord {
             payer: payer.clone(),
@@ -91,7 +96,12 @@ impl EscrowGate {
             PERSISTENT_EXTEND_TTL_AMOUNT,
         );
 
-        env.storage().instance().set(&DataKey::EscrowCounter, &counter);
+        env.storage()
+            .instance()
+            .set(&DataKey::EscrowCounter, &counter);
+        env.storage()
+            .instance()
+            .extend_ttl(INSTANCE_EXTEND_TTL_THRESHOLD, INSTANCE_EXTEND_TTL_AMOUNT);
 
         env.events().publish(
             (symbol_short!("created"), counter),
@@ -130,28 +140,27 @@ impl EscrowGate {
             return Err(EscrowError::InvalidStatus);
         }
 
-        let fee_bps: u32 = env
-            .storage()
-            .instance()
-            .get(&DataKey::FeeBps)
-            .unwrap_or(0);
+        let fee_bps: u32 = env.storage().instance().get(&DataKey::FeeBps).unwrap_or(0);
         let treasury: Address = env
             .storage()
             .instance()
             .get(&DataKey::Treasury)
             .ok_or(EscrowError::NotInitialized)?;
 
-        let fee_amount = (record.amount * (fee_bps as i128)) / BPS_DIVISOR;
-        let payout_amount = record.amount - fee_amount;
+        let fee_amount = record
+            .amount
+            .checked_mul(fee_bps as i128)
+            .ok_or(EscrowError::InvalidStatus)?
+            / BPS_DIVISOR;
+        let payout_amount = record
+            .amount
+            .checked_sub(fee_amount)
+            .ok_or(EscrowError::InvalidStatus)?;
 
         let token_client = token::Client::new(&env, &record.token);
 
         if fee_amount > 0 {
-            token_client.transfer(
-                &env.current_contract_address(),
-                &treasury,
-                &fee_amount,
-            );
+            token_client.transfer(&env.current_contract_address(), &treasury, &fee_amount);
         }
 
         token_client.transfer(
@@ -162,6 +171,9 @@ impl EscrowGate {
 
         record.status = EscrowStatus::Disbursed;
         env.storage().persistent().set(&key, &record);
+        env.storage()
+            .instance()
+            .extend_ttl(INSTANCE_EXTEND_TTL_THRESHOLD, INSTANCE_EXTEND_TTL_AMOUNT);
 
         env.events().publish(
             (Symbol::new(&env, "disbursed"), escrow_id),
@@ -198,11 +210,12 @@ impl EscrowGate {
 
         record.status = EscrowStatus::Refunded;
         env.storage().persistent().set(&key, &record);
+        env.storage()
+            .instance()
+            .extend_ttl(INSTANCE_EXTEND_TTL_THRESHOLD, INSTANCE_EXTEND_TTL_AMOUNT);
 
-        env.events().publish(
-            (Symbol::new(&env, "refunded"), escrow_id),
-            record.amount,
-        );
+        env.events()
+            .publish((Symbol::new(&env, "refunded"), escrow_id), record.amount);
 
         Ok(())
     }
