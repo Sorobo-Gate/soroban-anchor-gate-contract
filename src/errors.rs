@@ -13,4 +13,5 @@ pub enum EscrowError {
     UnlockTimePassed = 7,
     ZeroAmount = 8,
     InvalidBps = 9,
+    ArithmeticOverflow = 10,
 }

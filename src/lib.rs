@@ -68,7 +68,9 @@ impl EscrowGate {
             .get(&DataKey::EscrowCounter)
             .ok_or(EscrowError::NotInitialized)?;
 
-        counter = counter.checked_add(1).ok_or(EscrowError::InvalidStatus)?;
+        counter = counter
+            .checked_add(1)
+            .ok_or(EscrowError::ArithmeticOverflow)?;
 
         let token_client = token::Client::new(&env, &token);
         token_client.transfer(&payer, &env.current_contract_address(), &amount);
@@ -76,7 +78,7 @@ impl EscrowGate {
         let current_time = env.ledger().timestamp();
         let unlock_timestamp = current_time
             .checked_add(lock_duration)
-            .ok_or(EscrowError::InvalidStatus)?;
+            .ok_or(EscrowError::ArithmeticOverflow)?;
 
         let record = EscrowRecord {
             payer: payer.clone(),
@@ -150,12 +152,12 @@ impl EscrowGate {
         let fee_amount = record
             .amount
             .checked_mul(fee_bps as i128)
-            .ok_or(EscrowError::InvalidStatus)?
+            .ok_or(EscrowError::ArithmeticOverflow)?
             / BPS_DIVISOR;
         let payout_amount = record
             .amount
             .checked_sub(fee_amount)
-            .ok_or(EscrowError::InvalidStatus)?;
+            .ok_or(EscrowError::ArithmeticOverflow)?;
 
         let token_client = token::Client::new(&env, &record.token);
 
