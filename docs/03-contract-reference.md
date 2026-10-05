@@ -1,10 +1,13 @@
 # Smart Contract Reference
 
 - **Network:** Stellar Testnet
-- **Contract ID:** `CCCSLE7UN2FRLB2HQWEUEXM4365NDYH3QSC6J5TILQWBSTTIDKFWXX2Y`
-- **Admin / Treasury Address:** `GAYVUOIPXTTDJSJOQX4FS5ASFLDN5FVFLFWG2G46BROM2D2545TLQAPI`
+- **Verified Contract ID:** `CD36A2JQEEQSBTKOE6T5PB3BPV7IGIYDSSOBOOK6NE4RSOWGNC2HXXDA`
+- **Companion App Contract ID:** `CCCSLE7UN2FRLB2HQWEUEXM4365NDYH3QSC6J5TILQWBSTTIDKFWXX2Y`
+- **Admin / Treasury Address:** `GAC6AIE7NVRD5FKLZZXLFNBZKCF4E5PETYC2O2MNHDP2CL5Z2C4KZUBW`
 - **Default Fee:** 200 bps (2.0%)
-- **Target:** `wasm32-unknown-unknown`
+- **Target Architecture:** `wasm32v1-none`
+
+For the complete technical specification including storage data keys, exact error codes, and TTL configuration, refer to [`docs/contract-spec.md`](contract-spec.md).
 
 ---
 
@@ -51,8 +54,8 @@ pub fn create_escrow(
 ```
 
 - **Authorization:** Requires `payer.require_auth()`.
-- **Emits:** Event topic `(Symbol::new("created"), escrow_id)` with payload `(payer, amount, profile_hash)`.
-- **Errors:** `ZeroAmount`, `NotInitialized`.
+- **Emits:** Event topic `(symbol_short!("created"), escrow_id)` with payload `(payer, amount, profile_hash)`.
+- **Errors:** `ZeroAmount`, `NotInitialized`, `InvalidStatus`.
 
 ---
 
@@ -69,7 +72,7 @@ pub fn release_to_anchor(
 ```
 
 - **Authorization:** Requires `caller.require_auth()`. `caller` must be either payer or admin.
-- **Emits:** Event topic `(Symbol::new("disbursed"), escrow_id)` with payload `(profile_hash, payout_amount)`.
+- **Emits:** Event topic `(Symbol::new(&env, "disbursed"), escrow_id)` with payload `(profile_hash, payout_amount)`.
 - **Errors:** `EscrowNotFound`, `Unauthorized`, `InvalidStatus`.
 
 ---
@@ -82,5 +85,5 @@ pub fn refund(env: Env, escrow_id: u64) -> Result<(), EscrowError>;
 ```
 
 - **Authorization:** Requires `record.payer.require_auth()`.
-- **Emits:** Event topic `(Symbol::new("refunded"), escrow_id)` with payload `amount`.
+- **Emits:** Event topic `(Symbol::new(&env, "refunded"), escrow_id)` with payload `amount`.
 - **Errors:** `EscrowNotFound`, `InvalidStatus`, `UnlockTimeNotReached`.
