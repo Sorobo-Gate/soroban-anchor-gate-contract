@@ -694,3 +694,27 @@ fn test_event_schemas_emitted() {
     let refunded_id: u64 = u64::try_from_val(&env, &refunded_event.1.get(1).unwrap()).unwrap();
     assert_eq!(refunded_id, escrow_id_2);
 }
+
+#[test]
+fn test_create_escrow_overflow_rejected() {
+    let env = Env::default();
+    env.mock_all_auths();
+
+    let (client, _, admin, treasury, payer, beneficiary, _, token_client, _) =
+        setup_test_env(&env, 20_000);
+    client.init(&admin, &treasury, &200);
+
+    let profile_hash = BytesN::from_array(&env, &[16u8; 32]);
+
+    // Test timestamp overflow: current_time (1000) + lock_duration (u64::MAX) overflows
+    env.ledger().with_mut(|l| l.timestamp = 1000);
+    let res_overflow = client.try_create_escrow(
+        &payer,
+        &beneficiary,
+        &token_client.address,
+        &10_000,
+        &profile_hash,
+        &u64::MAX,
+    );
+    assert_eq!(res_overflow, Err(Ok(EscrowError::ArithmeticOverflow)));
+}
