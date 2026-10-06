@@ -1,8 +1,8 @@
 # Submission Pack: SorobanAnchor Gate Contract
 
-**Submission Package Date:** 2026-10-05  
-**Project:** SorobanAnchor Gate  
-**Authoritative Contract Repository:** [https://github.com/Sorobo-Gate/soroban-anchor-gate-contract](https://github.com/Sorobo-Gate/soroban-anchor-gate-contract)  
+**Submission Package Date:** 2026-10-05
+**Project:** SorobanAnchor Gate
+**Authoritative Contract Repository:** [https://github.com/Sorobo-Gate/soroban-anchor-gate-contract](https://github.com/Sorobo-Gate/soroban-anchor-gate-contract)
 **Companion Application Repository:** [https://github.com/Sorobo-Gate/soroban-anchor-gate-app](https://github.com/Sorobo-Gate/soroban-anchor-gate-app)
 
 ---
@@ -31,37 +31,37 @@ SorobanAnchor Gate provides decentralized, non-custodial milestone escrow smart 
 | **Network** | Stellar Testnet (`Test SDF Network ; September 2015`) |
 | **Soroban RPC Endpoint** | `https://soroban-testnet.stellar.org` |
 | **Protocol Version** | 29 (Captive Core 29.0.0) |
-| **Contract ID** | `CD36A2JQEEQSBTKOE6T5PB3BPV7IGIYDSSOBOOK6NE4RSOWGNC2HXXDA` |
-| **WASM Hash** | `fdec17f890b77468c542ba8d8d6d9bcacddaa576b304f5e8cce607296bbe9a3d` |
-| **Explorer Link** | [Stellar Expert Contract Explorer](https://stellar.expert/explorer/testnet/contract/CD36A2JQEEQSBTKOE6T5PB3BPV7IGIYDSSOBOOK6NE4RSOWGNC2HXXDA) |
+| **Contract ID** | `CBIHLECKLMXYK6FPHSGGVYF6AHNFRHR3T5EIFIS3PFQDFKDQWNR25PHT` |
+| **WASM Hash** | `ba9eaef277a2943c5a48f38aea849c78acf8cd9306d71646225a15ea41965e32` |
+| **Explorer Link** | [Stellar Expert Contract Explorer](https://stellar.expert/explorer/testnet/contract/CBIHLECKLMXYK6FPHSGGVYF6AHNFRHR3T5EIFIS3PFQDFKDQWNR25PHT) |
 
 ---
 
 ## 3. Empirical Transaction Evidence Log
 
-All transactions executed live on Stellar Testnet on 2026-10-05:
+All transactions executed live on Stellar Testnet on 2026-10-06:
 
-1. **WASM Installation:**  
-   `7767bb85389218f85c4a0444d26df5e7744ec5d55ed526c1c0ee2757d51f9895`  
-   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/7767bb85389218f85c4a0444d26df5e7744ec5d55ed526c1c0ee2757d51f9895)
-2. **Contract Instance Deployment:**  
-   `0e0d6173f77cbcc71806f459b109c34f65a9fc93833432e38cfcddad01bce350`  
-   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/0e0d6173f77cbcc71806f459b109c34f65a9fc93833432e38cfcddad01bce350)
-3. **Contract Initialization (`init`):**  
-   `52d45fb1d428dc21cb950683fe36f7577c229df985a9dec31b96c3ce0de6cb78`  
-   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/52d45fb1d428dc21cb950683fe36f7577c229df985a9dec31b96c3ce0de6cb78)
-4. **Escrow 1 Creation (`create_escrow`):**  
-   `a2de3a3810ee6f0ea9e2b9709c6a733b428f38f335d5ba2fa2df11bc5994be80`  
-   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/a2de3a3810ee6f0ea9e2b9709c6a733b428f38f335d5ba2fa2df11bc5994be80)
-5. **Escrow 1 Disbursement (`release_to_anchor`):**  
-   `28a4bb40726fb8628450d94ab84ff678104a99e5628ec013c9da2287209e7979`  
-   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/28a4bb40726fb8628450d94ab84ff678104a99e5628ec013c9da2287209e7979)
-6. **Escrow 2 Creation (`create_escrow`):**  
-   `3f7d23fafe024d10a645f176e6720abacfcd2ffa4414c4a2716ed9c40fa7a2f8`  
-   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/3f7d23fafe024d10a645f176e6720abacfcd2ffa4414c4a2716ed9c40fa7a2f8)
-7. **Escrow 2 Timelocked Refund (`refund`):**  
-   `c59866c8998313a01425cadc602e6861763073d0197ea909e6a6884fe5a4be59`  
-   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/c59866c8998313a01425cadc602e6861763073d0197ea909e6a6884fe5a4be59)
+1. **WASM Installation:**
+   `7ebefb3e922463f555177ffc384a9bab725ec11e4546e029689f2cb03ecdc604`
+   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/7ebefb3e922463f555177ffc384a9bab725ec11e4546e029689f2cb03ecdc604)
+2. **Contract Instance Deployment:**
+   `0000278938dfd9e78537a455dce5e27285e848f41be54f8d77e6a5aa2195ab2b`
+   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/0000278938dfd9e78537a455dce5e27285e848f41be54f8d77e6a5aa2195ab2b)
+3. **Contract Initialization (`init`):**
+   `1ee57cf0d72c32d51ee102a038144c6d395a5e38b31b5b4c8afc600cfaa7c079`
+   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/1ee57cf0d72c32d51ee102a038144c6d395a5e38b31b5b4c8afc600cfaa7c079)
+4. **Escrow 1 Creation (`create_escrow`):**
+   `e0b574823c2c8bd9e8b9e97ae561c69e536fc38b6f61a21553d1f6e27e75980d`
+   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/e0b574823c2c8bd9e8b9e97ae561c69e536fc38b6f61a21553d1f6e27e75980d)
+5. **Escrow 1 Disbursement (`release_to_anchor`):**
+   `0acc0aa60858bc579fb774ef4ea4788ec62c47db6c9ed4524f8b0cd77436dbeb`
+   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/0acc0aa60858bc579fb774ef4ea4788ec62c47db6c9ed4524f8b0cd77436dbeb)
+6. **Escrow 2 Creation (`create_escrow`):**
+   `b1e24c057057c8b8764ae1a59f6da482ee3e13affef4dfa955bbe17583b789da`
+   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/b1e24c057057c8b8764ae1a59f6da482ee3e13affef4dfa955bbe17583b789da)
+7. **Escrow 2 Timelocked Refund (`refund`):**
+   `9f1cf6f0f93db563de4b9d1a4daad34861c27ae8036486a525ba92b6df889f03`
+   [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/9f1cf6f0f93db563de4b9d1a4daad34861c27ae8036486a525ba92b6df889f03)
 
 ---
 
@@ -80,9 +80,9 @@ All transactions executed live on Stellar Testnet on 2026-10-05:
 
 ## 5. Known Limitations & Backlog Roadmap
 
-1. **Multi-Token Whitelisting ([Issue #1](https://github.com/Sorobo-Gate/soroban-anchor-gate-contract/issues/1)):**  
+1. **Multi-Token Whitelisting ([Issue #1](https://github.com/Sorobo-Gate/soroban-anchor-gate-contract/issues/1)):**
    Current MVP allows any SAC token. Future release will introduce admin whitelist storage and validation.
-2. **Arbiter Dispute Resolution ([Issue #2](https://github.com/Sorobo-Gate/soroban-anchor-gate-contract/issues/2)):**  
+2. **Arbiter Dispute Resolution ([Issue #2](https://github.com/Sorobo-Gate/soroban-anchor-gate-contract/issues/2)):**
    Current settlement is binary (100% release or 100% refund). Future release will implement third-party arbiter split resolution using basis points.
-3. **Reserved Error Code:**  
+3. **Reserved Error Code:**
    `UnlockTimePassed` (7) is reserved for time-bounded dispute arbitration.
