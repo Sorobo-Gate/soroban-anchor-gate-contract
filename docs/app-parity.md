@@ -21,7 +21,7 @@
 | **Numeric Domain: Escrow ID** | `u64` (unsigned 64-bit integer) | Go: `uint64`<br>TS SDK: `bigint` | ✅ **MATCH** | Deterministic sequential counter representation. |
 | **Profile Commitment Format** | `BytesN<32>` (raw 32-byte array) | Client: SHA-256 digest of banking coordinates (64 hex characters) | ✅ **MATCH** | Strictly validated with `/^[0-9a-fA-F]{64}$/`. Raw bytes submitted onchain. |
 | **Stellar Network Coordinates** | Testnet | Testnet passphrase:<br>`Test SDF Network ; September 2015`<br>RPC: `https://soroban-testnet.stellar.org` | ✅ **MATCH** | Identical network passphrase and RPC URLs used across web, relay, and contract tests. |
-| **Contract ID Environment Name** | Authoritative Testnet ID:<br>`CD36A2JQEEQSBTKOE6T5PB3BPV7IGIYDSSOBOOK6NE4RSOWGNC2HXXDA` | Web: `NEXT_PUBLIC_ESCROW_CONTRACT_ID`<br>Relay: `SOROBAN_CONTRACT_ID` | ⚠️ **UPDATE REQUIRED IN APP** | The verified deployment is `CD36A2JQEEQSBTKOE6T5PB3BPV7IGIYDSSOBOOK6NE4RSOWGNC2HXXDA`. The companion app repo currently references a stale ID (`CCCSLE...`) and must be updated in the app workflow. |
+| **Contract ID Environment Name** | Authoritative Testnet ID:<br>`CBIHLECKLMXYK6FPHSGGVYF6AHNFRHR3T5EIFIS3PFQDFKDQWNR25PHT` | Web: `NEXT_PUBLIC_ESCROW_CONTRACT_ID`<br>Relay: `SOROBAN_CONTRACT_ID` | ⚠️ **UPDATE REQUIRED IN APP** | The verified deployment is `CBIHLECKLMXYK6FPHSGGVYF6AHNFRHR3T5EIFIS3PFQDFKDQWNR25PHT`. The companion app repo currently references a stale ID and must be updated in the app workflow. |
 | **Fee Semantics** | In basis points (`u32`, 0..=1000 bps). Deducted onchain from principal in `release_to_anchor`. | Client displays net disbursement; off-chain relay passes net payout to SEP-31 anchor. | ✅ **MATCH** | Onchain arithmetic is atomic; no client-side fee manipulation possible. |
 | **Anchor Disbursement Address** | Passed as `Address` parameter to `release_to_anchor`. | Selected by payer/admin from active Anchor deposit coordinates. | ✅ **MATCH** | Contract verifies payer/admin auth before transferring tokens to destination anchor. |
 
@@ -59,11 +59,11 @@ For synchronization with the companion application repository (`Sorobo-Gate/soro
 
 | Parameter | Authoritative Value |
 |---|---|
-| **Contract ID** | `CD36A2JQEEQSBTKOE6T5PB3BPV7IGIYDSSOBOOK6NE4RSOWGNC2HXXDA` |
+| **Contract ID** | `CBIHLECKLMXYK6FPHSGGVYF6AHNFRHR3T5EIFIS3PFQDFKDQWNR25PHT` |
 | **Network** | Stellar Testnet |
 | **Network Passphrase** | `Test SDF Network ; September 2015` |
 | **Soroban RPC URL** | `https://soroban-testnet.stellar.org` |
-| **WASM Hash** | `fdec17f890b77468c542ba8d8d6d9bcacddaa576b304f5e8cce607296bbe9a3d` |
+| **WASM Hash** | `ba9eaef277a2943c5a48f38aea849c78acf8cd9306d71646225a15ea41965e32` |
 | **Verification Token** | `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` (Native XLM SAC) |
 | **State Enum** | `Funded` (0), `Disbursed` (1), `Refunded` (2) |
 | **Event Topics** | `("created", escrow_id: u64)`, `("disbursed", escrow_id: u64)`, `("refunded", escrow_id: u64)` |

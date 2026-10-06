@@ -67,12 +67,12 @@ The smart contract is deployed and verified live on Stellar Testnet:
 | **Network** | Stellar Testnet (`Test SDF Network ; September 2015`) |
 | **Soroban RPC** | `https://soroban-testnet.stellar.org` |
 | **Protocol Version** | 29 (Captive Core 29.0.0) |
-| **Deployed Contract ID** | `CD36A2JQEEQSBTKOE6T5PB3BPV7IGIYDSSOBOOK6NE4RSOWGNC2HXXDA` |
-| **WASM Hash** | `fdec17f890b77468c542ba8d8d6d9bcacddaa576b304f5e8cce607296bbe9a3d` |
-| **Target Architecture** | `wasm32v1-none` (7,476 bytes optimized) |
-| **Stellar Expert Link** | [Contract CD36A2... on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CD36A2JQEEQSBTKOE6T5PB3BPV7IGIYDSSOBOOK6NE4RSOWGNC2HXXDA) |
+| **Deployed Contract ID** | `CBIHLECKLMXYK6FPHSGGVYF6AHNFRHR3T5EIFIS3PFQDFKDQWNR25PHT` |
+| **WASM Hash** | `ba9eaef277a2943c5a48f38aea849c78acf8cd9306d71646225a15ea41965e32` |
+| **Target Architecture** | `wasm32v1-none` (7,515 bytes optimized) |
+| **Stellar Expert Link** | [Contract CBIHLECK... on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CBIHLECKLMXYK6FPHSGGVYF6AHNFRHR3T5EIFIS3PFQDFKDQWNR25PHT) |
 
-Empirical transaction hashes and event logs are detailed in [`evidence/testnet-2026-10-05.md`](evidence/testnet-2026-10-05.md).
+Empirical transaction hashes and event logs are detailed in [`evidence/testnet-2026-10-06.md`](evidence/testnet-2026-10-06.md).
 
 ---
 
