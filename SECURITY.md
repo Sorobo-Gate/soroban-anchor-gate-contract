@@ -48,8 +48,8 @@ Every state-mutating operation enforces strict cryptographic authorization:
 ## 5. Audit & Verification Status
 
 - **Formal Audit Disclaimer:** This smart contract has **not** undergone a third-party smart contract security audit. Do not deploy to Stellar Mainnet with real capital without an independent third-party audit.
-- **Empirical Testing:** 20 automated unit, authorization, and lifecycle integration tests pass with 100% success rate in `src/test.rs`.
-- **Live Testnet Verification:** Full lifecycle transactions (installation, deployment, initialization, creation, fee distribution, disbursement, timelock expiry, and refund) verified empirically on Stellar Testnet on 2026-10-05 (see [`evidence/testnet-2026-10-05.md`](evidence/testnet-2026-10-05.md)).
+- **Empirical Testing:** 21 automated unit, authorization, and lifecycle integration tests pass with 100% success rate in `src/test.rs`.
+- **Live Testnet Verification:** Full lifecycle transactions (installation, deployment, initialization, creation, fee distribution, disbursement, timelock expiry, and refund) verified empirically on Stellar Testnet for contract `CBIHLECKLMXYK6FPHSGGVYF6AHNFRHR3T5EIFIS3PFQDFKDQWNR25PHT` (see [`evidence/testnet-2026-10-06.md`](evidence/testnet-2026-10-06.md)).
 - **Automated Dependency Auditing:** Dependabot scans `cargo` dependencies and `github-actions` weekly.
 
 ---

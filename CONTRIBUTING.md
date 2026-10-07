@@ -1,6 +1,6 @@
 # Contributing to SorobanAnchor Gate Contract
 
-Thank you for contributing to the `soroban-anchor-gate-contract` repository. We welcome contributions that maintain code quality, security boundaries, and protocol correctness.
+Thank you for contributing to the `soroban-anchor-gate-contract` repository! We welcome contributions that maintain code quality, security boundaries, and protocol correctness.
 
 ---
 
@@ -15,8 +15,6 @@ Ensure the following tools are installed before developing:
   ```
 - **Stellar CLI:** Version `28.1.0` or higher
   ```bash
-  # Linux x86_64
-  curl -sSL https://github.com/stellar/stellar-cli/releases/download/v28.1.0/stellar-cli-28.1.0-x86_64-unknown-linux-gnu.tar.gz | sudo tar -xz -C /usr/local/bin
   stellar --version
   ```
 
@@ -24,7 +22,7 @@ Ensure the following tools are installed before developing:
 
 ## 2. Branch Model & Contribution Workflow
 
-- **Default / Integration Branch:** `develop`
+- **Default / Integration Branch:** `develop` (all pull requests must target `develop`)
 - **Release Branch:** `main` (reserved strictly for verified tagged milestone releases)
 
 ### Branching Rules:
@@ -35,9 +33,9 @@ Ensure the following tools are installed before developing:
    git checkout -b feat/your-feature-name
    ```
 2. Pull requests must target `develop`, never `main`.
-3. Branch protection is strictly enforced on `develop`:
-   - All changes must arrive via pull request with at least 1 approving review.
-   - The required status check `Rust & Soroban Checks` must pass.
+3. Branch protection is active on `develop`:
+   - All changes must arrive via pull request with review approval.
+   - Required status checks (`Contracts CI`) must pass cleanly.
    - Force pushes and branch deletions are disabled.
 
 ---
@@ -65,30 +63,33 @@ stellar contract build
 
 ---
 
-## 4. Git Commit Hygiene & Selective Staging
+## 4. Engineering Standards & Commit Hygiene
 
-To maintain a clean, auditable Git history, contributors must adhere strictly to these rules:
+To maintain an auditable and coherent project history, please follow these guidelines:
 
-1. **Conventional Commits Format:**
-   ```text
-   type(scope): concise description
-   ```
-   *Allowed types:* `feat`, `fix`, `test`, `ci`, `docs`, `refactor`, `chore`.  
-   *Examples:*
-   - `feat(escrow): implement multi-token whitelist storage`
-   - `test(refund): verify timelock boundary condition`
-   - `fix(events): correct payload encoding for disbursed event`
+### 1. One Logical Unit per Commit
+Each commit should represent a coherent, self-contained change. Related code, tests, and documentation that belong to the same logical task should be committed together. Avoid bundling unrelated tasks.
 
-2. **One Logical Unit Per Commit:**
-   Never bundle unrelated changes (e.g. Mixing contract logic edits with documentation or dependency upgrades).
+> **Note**: One logical unit per commit does not mean one file per commit. Stage all files that comprise the logical unit together.
 
-3. **Selective File Staging:**
-   - **Never run:** `git add .` or `git commit -a`.
-   - **Always run:** `git add exact/path/to/file`.
-   - Inspect staged diff before committing: `git diff --cached`.
+### 2. Conventional Commits Format
+Use standard conventional commit prefixes with an appropriate scope:
+```text
+type(scope): concise description in imperative mood
+```
+- `feat(escrow): implement multi-token whitelist storage`
+- `fix(events): correct payload encoding for disbursed event`
+- `test(refund): verify timelock boundary condition`
+- `docs(spec): update storage key mapping table`
+- `chore(deps): update soroban sdk dependencies`
 
-4. **Continuous Integration Verification:**
-   Push changes after each verified logical commit.
+### 3. Selective File Staging
+- Stage specific files that belong to the logical unit: `git add <file1> <file2>`.
+- Avoid blanket staging commands such as `git add .` or `git commit -a` to prevent unintentionally committing untracked files, local configuration, or secrets.
+- Review staged changes with `git diff --staged` before committing.
+
+### 4. Verification Before Submitting
+Run the full test suite and linters locally before submitting your changes to ensure CI passes on the first run.
 
 ---
 
@@ -109,3 +110,9 @@ Any pull request that alters contract interfaces, errors, storage keys, or event
 - [`docs/contract-spec.md`](docs/contract-spec.md)
 - [`docs/app-parity.md`](docs/app-parity.md)
 - [`README.md`](README.md)
+
+---
+
+## 7. License
+
+Distributed under the Apache 2.0 License. See [`LICENSE`](LICENSE) for details.
