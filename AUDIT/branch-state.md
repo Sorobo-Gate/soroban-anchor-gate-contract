@@ -2,31 +2,33 @@
 
 **Audit Date:** 2026-10-09
 **Repository:** `Sorobo-Gate/soroban-anchor-gate-contract`
-**Current HEAD:** `a44c5c1617e4473c1dae52c74ddd17dc8f6ec2e1` on branch `develop`
+**Audit Baseline Commit:** `a44c5c1617e4473c1dae52c74ddd17dc8f6ec2e1`
 **Default Branch (Remote):** `develop`
-**Release Branch:** `main` (at `a44c5c1617e4473c1dae52c74ddd17dc8f6ec2e1`)
+**Release Branch:** `main`
 **Public Release Tag:** `v0.1.1` (commit `3411dec2321a3f566f357ace3b1ced6d5bf04061`, release `v0.1.1`)
+
+> **Snapshot Stability Note**: This SHA records the repository state observed immediately before this audit refresh. Updating this document creates a new documentation commit, so the live branch HEAD may advance while the verified branch relationship remains unchanged. Current alignment should be verified from the live GitHub branch comparison and CI state rather than by treating this document's recorded SHA as a permanently static HEAD value.
 
 ---
 
-## 1. Observed Branch Condition
+## 1. Observed Branch Condition (Audit Snapshot)
 
-Inspection via Git CLI and GitHub API confirms the following branch topology:
+Inspection via Git CLI and GitHub API at audit baseline confirms the following branch topology:
 
-- **Local Branches:**
-  - `* develop`: Primary development and collaboration branch (`a44c5c1617e4473c1dae52c74ddd17dc8f6ec2e1`).
-  - `  main`: Release branch aligned with `develop` (`a44c5c1617e4473c1dae52c74ddd17dc8f6ec2e1`).
+- **Branch Relationship**: At the audit baseline, `main` and `develop` were identical (`a44c5c1617e4473c1dae52c74ddd17dc8f6ec2e1`). Live branch equality and alignment should be verified directly from GitHub.
+- **Local Branches (at baseline):**
+  - `* develop`: Primary development and collaboration branch.
+  - `  main`: Release branch aligned with `develop`.
   - `  backup/pre-history-remediation-20261005`: Historical snapshot branch at `3dba838`.
 - **Remote Branches (`origin`):**
-  - `origin/develop`: Matches local `develop` (`a44c5c1617e4473c1dae52c74ddd17dc8f6ec2e1`).
-  - `origin/main`: Production release target (`a44c5c1617e4473c1dae52c74ddd17dc8f6ec2e1`).
-  - **Branch Relationship**: `main` and `develop` are identical (0 commits ahead, 0 commits behind).
+  - `origin/develop`: Active integration branch.
+  - `origin/main`: Production release branch.
 - **Tags & Releases:**
   - Git tag `v0.1.1` exists at commit `3411dec2321a3f566f357ace3b1ced6d5bf04061`.
   - Formal GitHub Release `v0.1.1` ("v0.1.1 - Verified Milestone Escrow with Live Testnet Deployment") published as Latest Release with compiled WASM binary `soroban_anchor_gate_contract.wasm` / `soroban_anchor_escrow.wasm` (hash `ba9eaef277a2943c5a48f38aea849c78acf8cd9306d71646225a15ea41965e32`).
   - Prior release `v0.1.0` remains documented as historical baseline (commit `bdd568de938a3cb4f3a9ead2808d48de91cbc392`).
 - **Continuous Integration (CI):**
-  - Workflow `Contracts CI` (`Rust & Soroban Checks`) passes on `main` and `develop`.
+  - At the time of this audit, workflow `Contracts CI` (`Rust & Soroban Checks`) passes on `main` and `develop`.
 - **Issues & PR Status:**
   - Open PRs: **0**.
   - Open Issues: **2**:
@@ -54,7 +56,7 @@ Inspection via Git CLI and GitHub API confirms the following branch topology:
 
 The repository strictly implements **Gitflow-Lite**:
 - `develop` serves as the active integration and default development branch where all active features, fixes, tests, and documentation are merged via pull requests.
-- `main` serves as the verified production/release branch, receiving updates only via audited release PRs from `develop` upon milestone tagging. Both branches currently point to the same verified release-ready state (`a44c5c1617e4473c1dae52c74ddd17dc8f6ec2e1`).
+- `main` serves as the verified production/release branch, receiving updates only via audited release PRs from `develop` upon milestone tagging. At the time of this audit, both branches were aligned at the verified release-ready state.
 - Pull requests must originate from topic branches (`fix/*`, `feat/*`, `docs/*`, `test/*`, `ci/*`, `chore/*`) targeting `develop`.
 - Direct pushes to `develop` without PRs are blocked for standard contributors by the configured branch protection rules.
 
