@@ -191,7 +191,7 @@ For vulnerability disclosure guidelines, see [`SECURITY.md`](SECURITY.md).
 
 ## Limitations
 
-- **Single-Token Acceptance**: The current contract accepts any valid SAC token address specified by the depositor. An administrative multi-token whitelist is planned in [Issue #1](https://github.com/Sorobo-Gate/soroban-anchor-gate-contract/issues/1).
+- **Unrestricted SAC Acceptance / No Administrative Token Whitelist**: The current contract accepts any valid SAC token address specified by the depositor. An administrative multi-token whitelist is planned in [Issue #1](https://github.com/Sorobo-Gate/soroban-anchor-gate-contract/issues/1).
 - **Binary Settlement**: Escrows resolve completely to disbursement or completely to refund. An arbiter dispute resolution branch for fractional allocations is planned in [Issue #2](https://github.com/Sorobo-Gate/soroban-anchor-gate-contract/issues/2).
 - **Anchor Off-Chain Fulfillment**: The contract cannot verify whether an off-chain anchor honors fiat payout once funds are transferred to its distribution address.
 
