@@ -1,118 +1,139 @@
-# Contributing to SorobanAnchor Gate Contract
+# Contributing to SorobanAnchor Gate
 
-Thank you for contributing to the `soroban-anchor-gate-contract` repository! We welcome contributions that maintain code quality, security boundaries, and protocol correctness.
+Thank you for contributing to SorobanAnchor Gate! We welcome contributions that maintain code quality, test coverage, and clear architectural boundaries across smart contracts, web applications, SDKs, and off-chain daemons.
 
 ---
 
-## 1. Prerequisites & Toolchain Setup
+## 🌊 Stellar Drips Wave Program Contributors
 
-Ensure the following tools are installed before developing:
+If you are participating through the **Stellar Drips Wave Program**, please review the following sprint guidelines:
 
-- **Rust Toolchain:** Stable Rust 1.85+ (tested on `1.97.1`)
-- **WebAssembly Target:** `wasm32v1-none`
+### 1. Finding & Claiming Tasks
+- Active Wave tasks are tracked under repository issues with the `drips-wave` label.
+- Tasks are categorized by complexity and point rewards:
+  - **`wave:trivial` (100 pts)**: Documentation fixes, typo corrections, minor tests, simple UI tweaks.
+  - **`wave:medium` (150 pts)**: Concrete feature additions, bug fixes, SDK enhancements, integration tests.
+  - **`wave:high` (200 pts)**: Complex protocol logic, arbiter resolution, cryptography, performance optimization.
+- Comment on the issue to request assignment before beginning work to prevent duplicate effort.
+
+### 2. Branching & Pull Requests
+- Branch from `develop`:
   ```bash
-  rustup target add wasm32v1-none
+  git checkout develop
+  git pull origin develop
+  git checkout -b wave/<issue-number>-<short-description>
   ```
-- **Stellar CLI:** Version `28.1.0` or higher
-  ```bash
-  stellar --version
-  ```
+- **PR Title**: Follow conventional commits (e.g., `feat(contracts): implement multi-token whitelist storage (#12)`).
+- **PR Description**: Reference the issue (e.g., `Closes #12`) and include empirical evidence of your tests passing (terminal output or screenshots).
+- All PRs must target the `develop` branch.
 
 ---
 
-## 2. Branch Model & Contribution Workflow
+## Repository Architecture
 
-- **Default / Integration Branch:** `develop` (all pull requests must target `develop`)
-- **Release Branch:** `main` (reserved strictly for verified tagged milestone releases)
-
-### Branching Rules:
-1. Always base feature and bugfix branches off the latest `develop`:
-   ```bash
-   git checkout develop
-   git pull origin develop
-   git checkout -b feat/your-feature-name
-   ```
-2. Pull requests must target `develop`, never `main`.
-3. Branch protection is active on `develop`:
-   - All changes must arrive via pull request with review approval.
-   - Required status checks (`Contracts CI`) must pass cleanly.
-   - Force pushes and branch deletions are disabled.
+```text
+soroban-anchor-gate/
+├── contracts/               # Soroban smart contract (Rust + Soroban SDK v22)
+├── apps/
+│   └── web/                 # Next.js 16 Web Dashboard & Freighter Wallet Interface
+├── packages/
+│   └── contract-client/     # TypeScript SDK for contract parameter encoding & validation
+├── services/
+│   └── relay/               # Go event listener daemon & durable event store
+├── deployment/              # Docker Compose configuration and deployment manifests
+├── install.sh               # One-click bootstrap script for all dependencies
+└── package.json             # Root monorepo orchestrator
+```
 
 ---
 
-## 3. Supported Build and Verification Commands
+## One-Click Setup
 
-Every pull request must pass all local checks before submission:
+To configure all dependencies, targets, and environment templates automatically:
 
 ```bash
-# 1. Code formatting check
-cargo fmt --check
+./install.sh
+```
 
-# 2. Typecheck with compiler
-cargo check
-
-# 3. Compiler linting with warnings denied
-cargo clippy --all-targets -- -D warnings
-
-# 4. Unit and integration tests (21 test cases)
-cargo test
-
-# 5. Canonical Stellar WASM contract compilation
-stellar contract build
+Or run using npm / make:
+```bash
+npm run install:all
+# or
+make install
 ```
 
 ---
 
-## 4. Engineering Standards & Commit Hygiene
+## Local Development & Testing
 
-To maintain an auditable and coherent project history, please follow these guidelines:
+### Running the Stack
+```bash
+# Start Web UI (http://localhost:3000) and Go Relay daemon concurrently:
+npm run dev
 
-### 1. One Logical Unit per Commit
-Each commit should represent a coherent, self-contained change. Related code, tests, and documentation that belong to the same logical task should be committed together. Avoid bundling unrelated tasks.
-
-> **Note**: One logical unit per commit does not mean one file per commit. Stage all files that comprise the logical unit together.
-
-### 2. Conventional Commits Format
-Use standard conventional commit prefixes with an appropriate scope:
-```text
-type(scope): concise description in imperative mood
+# Or with Docker:
+docker compose up --build
 ```
-- `feat(escrow): implement multi-token whitelist storage`
-- `fix(events): correct payload encoding for disbursed event`
-- `test(refund): verify timelock boundary condition`
-- `docs(spec): update storage key mapping table`
-- `chore(deps): update soroban sdk dependencies`
 
-### 3. Selective File Staging
-- Stage specific files that belong to the logical unit: `git add <file1> <file2>`.
-- Avoid blanket staging commands such as `git add .` or `git commit -a` to prevent unintentionally committing untracked files, local configuration, or secrets.
-- Review staged changes with `git diff --staged` before committing.
+### Running All Automated Tests
+```bash
+# Runs contract tests, SDK tests, web tests, and Go relay race tests:
+npm test
+# or
+make test
+```
 
-### 4. Verification Before Submitting
-Run the full test suite and linters locally before submitting your changes to ensure CI passes on the first run.
+### Component-Specific Verification
+
+#### 1. Smart Contracts (`contracts/`)
+```bash
+cd contracts
+make test              # Run 21 Soroban unit & lifecycle tests
+make build             # Compile contract WASM artifact
+make lint              # Run cargo fmt and clippy checks
+```
+
+#### 2. Next.js Web Dashboard (`apps/web/`)
+```bash
+cd apps/web
+npm run lint           # ESLint verification
+npm run typecheck      # TypeScript typecheck
+npm run test           # Run 21 Jest/Node test cases
+npm run build          # Production Next.js build
+```
+
+#### 3. Contract Client SDK (`packages/contract-client/`)
+```bash
+cd packages/contract-client
+npm run typecheck      # Typecheck
+npm run test           # Run 13 SDK unit tests
+npm run build          # Build TypeScript distribution
+```
+
+#### 4. Go Relay Daemon (`services/relay/`)
+```bash
+cd services/relay
+go vet ./...           # Static analysis
+go test -v -race ./... # Concurrency race tests
+go build ./cmd/relay/main.go
+```
 
 ---
 
-## 5. Security-Sensitive Protocol Areas
+## Engineering Standards & Commit Hygiene
 
-Pay rigorous attention when modifying the following components:
-- **Authorization Enforcement:** Any public state mutation must enforce caller auth (`admin.require_auth()` or `payer.require_auth()`).
-- **Token Transfers:** Direct SAC transfers must balance exactly; ensure contract balance returns to zero on terminal release or refund.
-- **Arithmetic Safety:** Never use unchecked operations on token amounts or fees. Use checked arithmetic (`checked_mul`, `checked_sub`, `checked_add`) to prevent panic or overflow.
-- **Timelocks:** Ensure timestamp comparisons evaluate against `env.ledger().timestamp()`.
-- **Storage Expiry:** Always extend instance and persistent TTL on state mutations.
-
----
-
-## 6. Documentation Expectations
-
-Any pull request that alters contract interfaces, errors, storage keys, or event schemas must simultaneously update:
-- [`docs/contract-spec.md`](docs/contract-spec.md)
-- [`docs/app-parity.md`](docs/app-parity.md)
-- [`README.md`](README.md)
+1. **One Logical Unit per Commit**: Each commit should represent a single logical change. Commit related code, tests, and documentation together.
+2. **Conventional Commits**:
+   - `feat(contracts): add arbiter dispute settlement`
+   - `feat(web): add wallet connection status indicator`
+   - `fix(relay): prevent replay of confirmed events`
+   - `test(contracts): add unauthorized refund rejection test`
+   - `docs(readme): update quickstart instructions`
+3. **Selective Staging**: Stage specific files (`git add <file1> <file2>`). Avoid `git add .` to protect sensitive local configs.
+4. **Mandatory Tests**: Every new feature or bug fix must include corresponding automated unit or integration tests.
 
 ---
 
-## 7. License
+## License
 
-Distributed under the Apache 2.0 License. See [`LICENSE`](LICENSE) for details.
+By contributing, you agree that your contributions will be licensed under the [Apache License 2.0](LICENSE).
